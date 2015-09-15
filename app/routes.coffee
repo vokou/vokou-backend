@@ -1,0 +1,69 @@
+crypto    = require('crypto')
+algorithm = 'aes-256-ctr'
+password  = 'We are fucking SPG'
+exec = require('child_process').exec
+DEBUG = true
+
+IsJsonString = (str)->
+    try
+      JSON.parse str
+    catch error
+        return false
+    return true;
+
+
+encrypt = (text)->
+  cipher = crypto.createCipher(algorithm,password)
+  crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex')
+  return crypted
+
+
+decrypt = (text)->
+  decipher = crypto.createDecipher(algorithm,password)
+  try
+    dec = decipher.update(text,'hex','utf8')
+    dec += decipher.final('utf8')
+    return dec
+  catch ex
+    console.log('failed');
+    return 'failed';
+
+
+routes = (app)->
+  app.get '/search',(req, res)->
+    if !req.query.secret
+      return res.status(500).end("wrong secret!")
+    if !req.query.checkin
+      return res.status(500).end("wrong ci!")
+
+    if !req.query.checkout
+      return res.status(500).end("wrong co!")
+
+    url = decrypt(req.query.secret)
+    if url.indexOf('http')<=-1
+      return res.status(500).end("wrong secret!")
+
+
+    spgcmd = './phantomjs spg.js "'+ url + '"'
+
+    exec spgcmd, (error, stdout, stderr)->
+      lines = stdout.split '\n'
+      i = 0
+      result = []
+      for line in lines
+        try
+          temp = JSON.parse line
+          name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
+          t = req.query.checkin.split('/')
+          ci = t[2]+'-'+t[0]+'-'+t[1]
+          t = req.query.checkout.split('/')
+          co = t[2]+'-'+t[0]+'-'+t[1]
+          temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
+          result.push temp
+        catch error
+          continue;
+      res.json(result)
+
+
+module.exports = routes
