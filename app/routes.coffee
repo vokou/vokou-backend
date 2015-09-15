@@ -59,6 +59,18 @@ routes = (app)->
           ci = t[2]+'-'+t[0]+'-'+t[1]
           t = req.query.checkout.split('/')
           co = t[2]+'-'+t[0]+'-'+t[1]
+          min = 0
+          t = 0
+          msg = "No Best Point Plan"
+          if temp.points != "" && temp.lsp != ""
+            min = Number(temp.lsp)/Number(temp.points)
+            msg = "Points"
+          if temp.cp != ""
+            t = (Number(temp.lsp)-Number(temp.cp.usd))/Number(temp.cp.points)
+          if t<min && t!=0
+            min = t
+            msg = "Cash + Points"
+          temp.pp = {point_plan: msg, value: min}
           temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
           result.push temp
         catch error
