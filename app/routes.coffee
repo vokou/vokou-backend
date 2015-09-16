@@ -1,4 +1,5 @@
 crypto    = require('crypto')
+unidecode = require('unidecode')
 algorithm = 'aes-256-ctr'
 password  = 'We are fucking SPG'
 exec = require('child_process').exec
@@ -44,17 +45,26 @@ routes = (app)->
     if url.indexOf('http')<=-1
       return res.status(500).end("wrong secret!")
 
+    cmd = ""
 
-    spgcmd = './phantomjs spg.js "'+ url + '"'
+    if( url.indexOf('starwoodhotels') > -1)
+      cmd = './phantomjs spg.js "'+ url + '"'
+    else
+      cmd = ""
 
-    exec spgcmd, (error, stdout, stderr)->
+    if cmd == ""
+      return res.status(500).end("wrong hotel company!")
+
+    exec cmd, (error, stdout, stderr)->
       lines = stdout.split '\n'
       i = 0
       result = []
       for line in lines
         try
           temp = JSON.parse line
+
           name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
+          name = unidecode(name)
           t = req.query.checkin.split('/')
           ci = t[2]+'-'+t[0]+'-'+t[1]
           t = req.query.checkout.split('/')
