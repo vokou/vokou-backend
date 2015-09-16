@@ -46,6 +46,12 @@ routes = (app)->
       return res.status(500).end("wrong secret!")
 
     cmd = ""
+    if url.indexOf(req.query.checkin) <= -1
+      return res.status(500).end("ci doesnt match!")
+
+
+    if url.indexOf(req.query.checkout) <= -1
+      return res.status(500).end("co doesnt match!")
 
     if( url.indexOf('starwoodhotels') > -1)
       cmd = './phantomjs spg.js "'+ url + '"'
@@ -62,7 +68,6 @@ routes = (app)->
       for line in lines
         try
           temp = JSON.parse line
-
           name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
           name = unidecode(name)
           t = req.query.checkin.split('/')
@@ -80,6 +85,8 @@ routes = (app)->
           if t<min && t!=0
             min = t
             msg = "Cash + Points"
+          if temp.lsp == 5000
+            temp.lsp = ''
           temp.pp = {point_plan: msg, value: min}
           temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
           result.push temp
