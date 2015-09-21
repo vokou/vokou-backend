@@ -1,7 +1,6 @@
 crypto    = require('crypto')
 unidecode = require('unidecode')
 request = require('request')
-jsdom = require('jsdom')
 
 algorithm = 'aes-256-ctr'
 password  = 'We are fucking SPG'
