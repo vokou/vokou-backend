@@ -1,6 +1,7 @@
 crypto    = require('crypto')
 unidecode = require('unidecode')
 request = require('request')
+map = require('./mapping.json')
 
 algorithm = 'aes-256-ctr'
 password  = 'We are fucking SPG'
@@ -99,6 +100,7 @@ routes = (app)->
       for line in lines
         try
           temp = JSON.parse line
+          temp.detail = map[temp.name];
           name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
           name = unidecode(name)
           t = req.query.checkin.split('/')

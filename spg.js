@@ -16,6 +16,7 @@ else{
   page.open(url, function (status) {
     if (status !== 'success') {
       console.log('error: Unable to access network '+ status);
+      phantom.exit();
     } else {
       // console.log(page.content);
       var results = page.evaluate(function() {
