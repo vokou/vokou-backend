@@ -49,8 +49,8 @@ routes = (app)->
     res.setHeader("Access-Control-Allow-Origin","*");
     if !req.body.hcurl || !req.body.price
       return res.status(500).end("wrong url!")
-    # url = req.body.turl
-    url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:Le_Royal_Meridien_Shanghai&radius=0mi&checkin=2015-09-23&checkout=2015-09-24&Rooms=1&adults_1=2&fileName=Le_Royal_Meridien_Shanghai"
+    url = req.body.turl
+    # url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:Le_Royal_Meridien_Shanghai&radius=0mi&checkin=2015-09-23&checkout=2015-09-24&Rooms=1&adults_1=2&fileName=Le_Royal_Meridien_Shanghai"
     if( url.indexOf('hotelscombined') > -1)
       cmd = './phantomjs hc.js "'+ url + '" '+req.body.price
     else
