@@ -34,61 +34,8 @@ decrypt = (text)->
 
 
 routes = (app)->
-  # app.get '/nodetube', (req, res)->
-  #   request = request.defaults({jar: true})
-  #   j = request.jar()
-  #   request {
-  #       headers: {
-  #         "Host":"www.hotelscombined.com"
-  #         "Connection": "keep-alive"
-  #         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
-  #         "Upgrade-Insecure-Requests": "1"
-  #         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36"
-  #         "Accept-Encoding": "gzip, deflate, sdch"
-  #         "Accept-Language": "en-US,en;q=0.8"
-  #       },
-  #       uri: 'http://www.hotelscombined.com/'
-  #       },(err, response, body)->
-  #         # cookie = get(response.headers, "Set-Cookie")
-  #         # if cookie
-  #         #   cookie = (cookie + "").split(";").shift()
-  #         #   console.log(cookie)
-  #
-  #         # res.send(cookie);
-  #         request {
-  #             headers: {
-  #               "Host":"www.hotelscombined.com"
-  #               "Connection": "keep-alive"
-  #               "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
-  #               "Upgrade-Insecure-Requests": "1"
-  #               "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.93 Safari/537.36"
-  #               "Accept-Encoding": "gzip, deflate, sdch"
-  #               "Accept-Language": "en-US,en;q=0.8"
-  #             },
-  #             uri: 'http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:Le_Royal_Meridien_Shanghai&radius=0mi&checkin=2015-09-23&checkout=2015-09-24&Rooms=1&adults_1=2&fileName=Le_Royal_Meridien_Shanghai'
-  #           }, (err, response, body)->
-  #             self = this
-  #             self.items = new Array()
-  #             if err && response.statusCode != 200
-  #               console.log('Request error.')
-  #             console.log(body)
-
-
-
-      # jsdom.env {
-      #   url: "http://youtube.com",
-      #   scripts: ['http://code.jquery.com/jquery-1.6.min.js'],
-      #   done:  (err, window) ->
-      #     $ = window.$;
-      #     console.log("HN Links");
-      #     $("td.title:not(:last) a").each ()->
-      #       console.log(" -", $(this).text());
-      #
-      #
-      # }
-
-
   app.get '/source/:sourceURL',  (req, res)->
+    res.setHeader("Access-Control-Allow-Origin","*");
     link = "http://www.hotelscombined.com/ProviderRedirect.ashx?"+req.params.sourceURL;
     redcmd = './phantomjs redirect.js ' + link;
     console.log(redcmd);
