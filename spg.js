@@ -43,7 +43,7 @@ else{
         }
         lines = pre_string.split('\n');
         i = 0;
-        min = 5000;
+        min = 9999;
         for( t = 0; t< lines.length; t++){
           if( lines[t].indexOf('Starpoints')>-1 ){
             if( lines[t+1] && lines[t+1].indexOf('+')>-1 ){
@@ -52,7 +52,7 @@ else{
               points = Number( lines[t].split(" ")[0].replace(',','') );
             }
           }else if( lines[t].indexOf('USD')>-1 ){
-            var usd = Number(lines[t].slice(5));
+            var usd = Number(lines[t].slice(5).replace(',',''));
             if(usd<min){
                 min = usd;
             }
@@ -66,7 +66,7 @@ else{
             lsp = "";
             points = "";
             cp = "";
-            min = 5000;
+            min = 9999;
           }else{
             name = lines[t];
           }

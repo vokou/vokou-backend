@@ -118,7 +118,7 @@ routes = (app)->
           if t<min && t!=0
             min = t
             msg = "Cash + Points"
-          if temp.lsp == 5000
+          if temp.lsp == 9999
             temp.lsp = ''
           temp.pp = {point_plan: msg, value: min}
           temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
