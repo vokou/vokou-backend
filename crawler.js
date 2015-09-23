@@ -20,7 +20,7 @@ var fetch = function(hotels, index, r){
       phantom.exit();
     } else {
       var jsonSource = page.plainText;
-      var resultObject = JSON.parse(jsonSource);
+      // var resultObject = JSON.parse(jsonSource);
       // console.log("NAME: "+resultObject['propertyContentResponse']['properties']['property']['summary']['propertyName']);
       var img = "http://www.starwoodhotels.com"+jsonSource.substring(jsonSource.indexOf('/pub'),jsonSource.indexOf('jpg'))+"jpg";
       var address = jsonSource.substring(jsonSource.indexOf('"addressLine":'),jsonSource.indexOf('] }, "phone":')).substring(14)+']';

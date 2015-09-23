@@ -6,6 +6,13 @@ timeout      = require 'connect-timeout'
 morgan       = require 'morgan'
 bodyParser   = require 'body-parser'
 
+allowCrossDomain = (req, res, next)->
+    res.header('Access-Control-Allow-Origin', 'example.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+
+
 
 
 haltOnTimedout = (req, res, next)->
@@ -24,6 +31,7 @@ app.use bodyParser.urlencoded({
 
 app.use timeout(1200000)
 app.use haltOnTimedout
+app.use allowCrossDomain
 
 require('./app/routes') app
 

@@ -36,7 +36,7 @@ decrypt = (text)->
 
 routes = (app)->
   app.get '/source/:sourceURL',  (req, res)->
-    res.setHeader("Access-Control-Allow-Origin","*");
+    # res.setHeader("Access-Control-Allow-Origin","*");
     link = "http://www.hotelscombined.com/ProviderRedirect.ashx?"+req.params.sourceURL;
     redcmd = './phantomjs redirect.js ' + link;
     console.log(redcmd);
@@ -47,6 +47,7 @@ routes = (app)->
 
 
   app.post '/getPrice', (req, res)->
+    # res.setHeader("Access-Control-Allow-Origin","*");
     if !req.body.hcurl || !req.body.price
       return res.status(500).end("wrong url!")
     url = req.body.hcurl
@@ -60,11 +61,10 @@ routes = (app)->
       return res.status(500).end("wrong url company!")
 
     exec cmd, (error, stdout, stderr)->
-      res.setHeader("Access-Control-Allow-Origin","*");
       res.send(stdout)
 
   app.get '/search',(req, res)->
-    res.setHeader("Access-Control-Allow-Origin","*");
+    # res.setHeader("Access-Control-Allow-Origin","*");
     if !req.query.secret
       return res.status(500).end("wrong secret!")
     if !req.query.checkin
