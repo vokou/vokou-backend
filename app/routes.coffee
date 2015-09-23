@@ -115,7 +115,7 @@ routes = (app)->
             msg = "Points"
           if temp.cp != ""
             t = (Number(temp.lsp)-Number(temp.cp.usd))/Number(temp.cp.points)
-          if t<min && t!=0
+          if t>min && t!=0
             min = t
             msg = "Cash + Points"
           if temp.lsp == 9999
