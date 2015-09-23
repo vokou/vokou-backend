@@ -47,7 +47,6 @@ routes = (app)->
 
 
   app.post '/getPrice', (req, res)->
-    res.setHeader("Access-Control-Allow-Origin","*");
     if !req.body.hcurl || !req.body.price
       return res.status(500).end("wrong url!")
     url = req.body.hcurl
@@ -61,6 +60,7 @@ routes = (app)->
       return res.status(500).end("wrong url company!")
 
     exec cmd, (error, stdout, stderr)->
+      res.setHeader("Access-Control-Allow-Origin","*");
       res.send(stdout)
 
   app.get '/search',(req, res)->
