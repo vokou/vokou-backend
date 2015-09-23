@@ -1,7 +1,7 @@
 express  = require 'express'
 app      = express()
 port     = process.env.PORT || 8888;
-
+fs       = require 'fs'
 timeout      = require 'connect-timeout'
 morgan       = require 'morgan'
 bodyParser   = require 'body-parser'
@@ -15,7 +15,8 @@ haltOnTimedout = (req, res, next)->
     req.status(500).send('response time out!')
 
 # set up our express application
-app.use morgan('dev') # log every request to the console
+accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+app.use morgan('combined',{stream: accessLogStream}) # log every request to the console
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({
   extended: true
