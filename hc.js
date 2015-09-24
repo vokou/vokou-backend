@@ -38,17 +38,14 @@ else{
                     for (i = 1; i < list.length; i++) {
                       lines = list[i].innerText;
                       brand = brandList[i-1].innerHTML;
-                      if(Number(lines.substring(1)) < price){
+                      if(Number(lines.substring(1)) < price*0.99){
                         if(brand.indexOf('CTE') <= -1){
-                          // console.log(Number(lines.substring(1)));
-                          // console.log(brand.substring(brand.indexOf('key'), brand.indexOf('" t')));
                           return {"price":Number(lines.substring(1)), "turl":brand.substring(brand.indexOf('key'), brand.indexOf('" t'))}
                           break;
                         }
                       }
                     }
                   }, price );
-
                   console.log(JSON.stringify(results));
                 }
                 phantom.exit();
