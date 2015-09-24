@@ -45,6 +45,28 @@ routes = (app)->
       res.send(stdout);
 
 
+  app.get '/getSPG', (req, res)->
+    if !req.query.checkin
+      return res.status(500).end("wrong!"+ !req.query.checkin+" "+!req.query.checkout+" "+!req.query.propID+" "+!req.query.hotelname)
+
+    temp = {}
+    temp.name = req.query.hotelname
+    temp.detail = map[temp.name];
+    name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
+    name = unidecode(name)
+    t = req.query.checkin.split('/')
+    ci = t[2]+'-'+t[0]+'-'+t[1]
+    t = req.query.checkout.split('/')
+    co = t[2]+'-'+t[0]+'-'+t[1]
+    url = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+req.query.propID+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
+    cmd = './phantomjs singleSPG.js "'+ url + '"'
+    # console.log url
+    exec cmd, (error, stdout, stderr)->
+      if stdout.indexOf('No') > -1
+        temp.lsp = '';
+      else
+        temp.lsp = stdout.replace('\n','');
+      res.send(JSON.stringify(temp));
 
   app.post '/getPrice', (req, res)->
     # res.setHeader("Access-Control-Allow-Origin","*");
