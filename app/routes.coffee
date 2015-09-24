@@ -58,6 +58,7 @@ routes = (app)->
     ci = t[2]+'-'+t[0]+'-'+t[1]
     t = req.query.checkout.split('/')
     co = t[2]+'-'+t[0]+'-'+t[1]
+    temp.hcurl = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
     url = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+req.query.propID+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
     temp.url = url
     cmd = './phantomjs singleSPG.js "'+ url + '"'
