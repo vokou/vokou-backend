@@ -59,6 +59,7 @@ routes = (app)->
     t = req.query.checkout.split('/')
     co = t[2]+'-'+t[0]+'-'+t[1]
     url = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+req.query.propID+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
+    temp.url = url
     cmd = './phantomjs singleSPG.js "'+ url + '"'
     # console.log url
     exec cmd, (error, stdout, stderr)->
