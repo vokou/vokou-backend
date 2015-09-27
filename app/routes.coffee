@@ -146,15 +146,14 @@ routes = (app)->
             temp.lsp = ''
           temp.pp = {point_plan: msg, value: min}
           temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
-          if req.query.hotelname == temp.name
+          if Number(req.query.propID) == temp.detail.id
             temp.spgurl = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+temp.detail.id+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
-
             return res.json(temp)
           result.push temp
         catch error
           continue;
 
-      if req.query.hotelname
+      if req.query.propID
         res.send('');
       else
         res.json(result)
