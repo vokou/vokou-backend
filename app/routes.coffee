@@ -146,10 +146,16 @@ routes = (app)->
             temp.lsp = ''
           temp.pp = {point_plan: msg, value: min}
           temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
+          if req.query.hotelname == temp.name
+            return res.json(temp)
           result.push temp
         catch error
           continue;
-      res.json(result)
+
+      if req.query.hotelname
+        res.send('');
+      else
+        res.json(result)
 
 
 module.exports = routes
