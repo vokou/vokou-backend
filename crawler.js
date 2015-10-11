@@ -14,6 +14,7 @@ var fetch = function(hotels, index, r){
   var id = hotels[keysbyindex[index]].id;
   // console.log(id);
   url = "https://api.starwoodhotels.com/property/"+ id+"?apiKey=u0dl4flhksq01sd9hct67bu2ko8ty7ae&locale=en_US";
+  // console.log(url);
   page.open(url, function (status) {
     if (status !== 'success') {
       console.log('error1: Unable to access network '+ status);
@@ -22,7 +23,17 @@ var fetch = function(hotels, index, r){
       var jsonSource = page.plainText;
       // var resultObject = JSON.parse(jsonSource);
       // console.log("NAME: "+resultObject['propertyContentResponse']['properties']['property']['summary']['propertyName']);
-      var img = "http://www.starwoodhotels.com"+jsonSource.substring(jsonSource.indexOf('/pub'),jsonSource.indexOf('jpg'))+"jpg";
+      var img = [];
+      var imgageSource = jsonSource;
+      var i = 0;
+      imgageSource = imgageSource.substring(imgageSource.indexOf('"sizeCode":"XX"'));
+      while(i!=4){
+        img[i]="http://www.starwoodhotels.com"+imgageSource.substring(imgageSource.indexOf('/pub'),imgageSource.indexOf('jpg'))+"jpg";
+        imgageSource = imgageSource.substring(imgageSource.indexOf('/pub'));
+        imgageSource = imgageSource.substring(imgageSource.indexOf('"sizeCode":"XX"'));
+        i++;
+      }
+      // img = "http://www.starwoodhotels.com"+jsonSource.substring(jsonSource.indexOf('/pub'),jsonSource.indexOf('jpg'))+"jpg";
       var address = jsonSource.substring(jsonSource.indexOf('"addressLine":'),jsonSource.indexOf('] }, "phone":')).substring(14)+']';
       hotels[keysbyindex[index]].img = img;
       hotels[keysbyindex[index]].address = address.replace(/\s\s+|\"|\[|\]/g,'');
