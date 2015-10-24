@@ -89,6 +89,9 @@ routes = (app)->
 
   app.get '/search',(req, res)->
     # res.setHeader("Access-Control-Allow-Origin","*");
+    if(req.query.health){
+      return res.end();
+    }
     if !req.query.secret
       return res.status(500).end("wrong secret!")
     if !req.query.checkin
