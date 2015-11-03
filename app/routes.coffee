@@ -126,6 +126,10 @@ routes = (app)->
     if cmd == ""
       return res.status(500).end("wrong hotel company!")
 
+    t = req.query.checkin.split('/')
+    ci = t[2]+'-'+t[0]+'-'+t[1]
+    t = req.query.checkout.split('/')
+    co = t[2]+'-'+t[0]+'-'+t[1]
     exec cmd, (error, stdout, stderr)->
       if type == 'spg'
         lines = stdout.split '\n'
@@ -137,10 +141,6 @@ routes = (app)->
             temp.detail = map[temp.name];
             name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
             name = unidecode(name)
-            t = req.query.checkin.split('/')
-            ci = t[2]+'-'+t[0]+'-'+t[1]
-            t = req.query.checkout.split('/')
-            co = t[2]+'-'+t[0]+'-'+t[1]
             min = 0
             t = 0
             msg = "No Best Point Plan"
