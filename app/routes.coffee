@@ -91,7 +91,7 @@ routes = (app)->
     # res.setHeader("Access-Control-Allow-Origin","*");
     if req.query.health
       return res.end();
-    
+
 
     if !req.query.secret
       return res.status(500).end("wrong secret!")
@@ -113,8 +113,13 @@ routes = (app)->
     if url.indexOf(req.query.checkout) <= -1
       return res.status(500).end("co doesnt match!")
 
+    type = ''
     if( url.indexOf('starwoodhotels') > -1)
       cmd = './phantomjs spg.js "'+ url + '"'
+      type = 'spg'
+    else if(url.indexOf('hyatt') > -1)
+      cmd = './phantomjs hyatt.js "'+ url + '"'
+      type = 'spg'
     else
       cmd = ""
 
@@ -125,43 +130,44 @@ routes = (app)->
       lines = stdout.split '\n'
       i = 0
       result = []
-      for line in lines
-        try
-          temp = JSON.parse line
-          temp.detail = map[temp.name];
-          name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
-          name = unidecode(name)
-          t = req.query.checkin.split('/')
-          ci = t[2]+'-'+t[0]+'-'+t[1]
-          t = req.query.checkout.split('/')
-          co = t[2]+'-'+t[0]+'-'+t[1]
-          min = 0
-          t = 0
-          msg = "No Best Point Plan"
-          if temp.points != "" && temp.lsp != ""
-            min = Number(temp.lsp)/Number(temp.points)
-            msg = "Points"
-          if temp.cp != ""
-            t = (Number(temp.lsp)-Number(temp.cp.usd))/Number(temp.cp.points)
-          if t>min && t!=0
-            min = t
-            msg = "Cash + Points"
-          if temp.lsp == 9999
-            temp.lsp = ''
-          temp.pp = {point_plan: msg, value: min}
-          temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
-          temp.spgurl = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+temp.detail.id+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
-          if Number(req.query.propID) == temp.detail.id
+      if type == 'spg'
+        for line in lines
+          try
+            temp = JSON.parse line
+            temp.detail = map[temp.name];
+            name = temp.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_').replace('_a_Luxury_Collection_Hotel','')
+            name = unidecode(name)
+            t = req.query.checkin.split('/')
+            ci = t[2]+'-'+t[0]+'-'+t[1]
+            t = req.query.checkout.split('/')
+            co = t[2]+'-'+t[0]+'-'+t[1]
+            min = 0
+            t = 0
+            msg = "No Best Point Plan"
+            if temp.points != "" && temp.lsp != ""
+              min = Number(temp.lsp)/Number(temp.points)
+              msg = "Points"
+            if temp.cp != ""
+              t = (Number(temp.lsp)-Number(temp.cp.usd))/Number(temp.cp.points)
+            if t>min && t!=0
+              min = t
+              msg = "Cash + Points"
+            if temp.lsp == 9999
+              temp.lsp = ''
+            temp.pp = {point_plan: msg, value: min}
+            temp.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
             temp.spgurl = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+temp.detail.id+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
-            return res.json(temp)
-          result.push temp
-        catch error
-          continue;
-
-      if req.query.propID
-        res.send('');
-      else
-        res.json(result)
-
+            if Number(req.query.propID) == temp.detail.id
+              temp.spgurl = "http://www.starwoodhotels.com/sheraton/rates/room.html?departureDate="+co+"&arrivalDate="+ci+"&ctx=search&priceMin=&propertyId="+temp.detail.id+"&sortOrder=&accessible=&numberOfRooms=1&numberOfAdults=1&bedType=&priceMax=&numberOfChildren=0&nonSmoking=&currencyCode=USD"
+              return res.json(temp)
+            result.push temp
+          catch error
+            continue;
+        if req.query.propID
+          res.send('');
+        else
+          res.json(result)
+      else if type == 'hyatt'
+        res.end('aaaa')
 
 module.exports = routes
