@@ -119,7 +119,7 @@ routes = (app)->
       type = 'spg'
     else if(url.indexOf('hyatt') > -1)
       cmd = './phantomjs hyatt.js "'+ url + '"'
-      type = 'spg'
+      type = 'hyatt'
     else
       cmd = ""
 
