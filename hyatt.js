@@ -50,21 +50,51 @@ else{
             tempObject.points = tempObject.passportPoint;
           }
           tempObject.detail = {id:tempObject.code, address: tempObject.address}
-          delete tempObject["currency"];
-          delete tempObject["image"];
-          delete tempObject["passportPoint"];
-          delete tempObject["isSoldOut"];
-          delete tempObject["price"];
-          delete tempObject["colorCode"];
-          delete tempObject["code"];
-          delete tempObject["brand"];
-          delete tempObject["description"];
-          delete tempObject["phone"];
-          delete tempObject["distance"];
-          delete tempObject["address"];
-          delete tempObject["coords"];
-          delete tempObject["detailsWSUrl"];
-          delete tempObject["bookingRatesMwUrl"];
+          if(tempObject["currency"]){
+            delete tempObject["currency"];
+          }
+          if(tempObject["image"]){
+            delete tempObject["image"];
+          }
+          if(tempObject["passportPoint"]){
+            delete tempObject["passportPoint"];
+          }
+          if(tempObject["isSoldOut"]){
+            delete tempObject["isSoldOut"];
+          }
+          if(tempObject["price"]){
+            delete tempObject["price"];
+          }
+          if(tempObject["colorCode"]){
+            delete tempObject["colorCode"];
+          }
+          if(tempObject["code"]){
+            delete tempObject["code"];
+          }
+          if(tempObject["brand"]){
+            delete tempObject["brand"];
+          }
+          if(tempObject["description"]){
+            delete tempObject["description"];
+          }
+          if(tempObject["phone"]){
+            delete tempObject["phone"];
+          }
+          if(tempObject["distance"]){
+            delete tempObject["distance"];
+          }
+          if(tempObject["address"]){
+            delete tempObject["address"];
+          }
+          if(tempObject["coords"]){
+            delete tempObject["coords"];
+          }
+          if(tempObject["detailsWSUrl"]){
+            delete tempObject["detailsWSUrl"];
+          }
+          if(tempObject["bookingRatesMwUrl"]){
+            delete tempObject["bookingRatesMwUrl"];
+          }
 
       }
       console.log(JSON.stringify(result));

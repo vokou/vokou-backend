@@ -173,7 +173,7 @@ routes = (app)->
         for item in result
           name = item.name.replace(/-/g,'').replace(/,/g,'').replace(/\./g,'').replace(/&/g,'').replace(/\s+/g,'_')
           item.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+name
-          console.log item.url
+          # console.log item.url
           if Number(req.query.propID) == item.detail.id
             return res.json(item)
         res.json(result);
