@@ -23,8 +23,11 @@ else{
       console.log(resultObject);
       phantom.exit();
     }
+    phantom.exit();
+
     // phantom.exit();
   });
+  phantom.exit();
 
   page.onConsoleMessage = function (msg) {
     console.log(msg);
