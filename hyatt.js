@@ -40,6 +40,7 @@ else{
       result = resultObject.results
       for (var i = 0; i < result.length; i++) {
           var tempObject = result[i];
+          console.log(JSON.stringify(tempObject));
           if(tempObject.isSoldOut == true){
             tempObject.pp = {point_plan: "No Best Point Plan", value: 0};
             tempObject.lsp = 9999;
