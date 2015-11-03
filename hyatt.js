@@ -21,7 +21,7 @@ else{
       console.log('error: Unable to access network '+ status);
       phantom.exit();
     } else {
-      console.log(page.plainText);
+      // console.log(page.plainText);
       var jsonSource = page.plainText;
       resultObject = JSON.parse(jsonSource);
     }
@@ -36,7 +36,36 @@ else{
         var tempObject = JSON.parse(jsonSource);
         ratio = tempObject.ratio
       }
-      console.log(ratio);
+      // console.log(ratio);
+      result = resultObject.results
+      for (var i = 0; i < result.length; i++) {
+          var tempObject = result[i];
+          if(tempObject.isSoldOut == true){
+            tempObject.pp = {point_plan: "No Best Point Plan", value: 0};
+            tempObject.lsp = 9999;
+          }else{
+            tempObject.lsp = tempObject.price/ratio;
+            tempObject.pp = {point_plan: "Points", value: tempObject.lsp/tempObject.passportPoint};
+            tempObject.points = tempObject.passportPoint;
+          }
+          tempObject.detail = {id:tempObject.code, address: tempObject.address}
+          delete tempObject[currency];
+          delete tempObject[image];
+          delete tempObject[passportPoint];
+          delete tempObject[isSoldOut];
+          delete tempObject[price];
+          delete tempObject[colorCode];
+          delete tempObject[brand];
+          delete tempObject[description];
+          delete tempObject[phone];
+          delete tempObject[distance];
+          delete tempObject[address];
+          delete tempObject[coords];
+          delete tempObject[detailsWSUrl];
+          delete tempObject[bookingRatesMwUrl];
+
+      }
+      console.log(JSON.stringify(result));
       phantom.exit();
     });
 
