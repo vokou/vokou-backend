@@ -52,20 +52,20 @@ else{
             tempObject.points = tempObject.passportPoint;
           }
           tempObject.detail = {id:tempObject.code, address: tempObject.address}
-          delete tempObject[currency];
-          delete tempObject[image];
-          delete tempObject[passportPoint];
-          delete tempObject[isSoldOut];
-          delete tempObject[price];
-          delete tempObject[colorCode];
-          delete tempObject[brand];
-          delete tempObject[description];
-          delete tempObject[phone];
-          delete tempObject[distance];
-          delete tempObject[address];
-          delete tempObject[coords];
-          delete tempObject[detailsWSUrl];
-          delete tempObject[bookingRatesMwUrl];
+          delete tempObject["currency"];
+          delete tempObject["image"];
+          delete tempObject["passportPoint"];
+          delete tempObject["isSoldOut"];
+          delete tempObject["price"];
+          delete tempObject["colorCode"];
+          delete tempObject["brand"];
+          delete tempObject["description"];
+          delete tempObject["phone"];
+          delete tempObject["distance"];
+          delete tempObject["address"];
+          delete tempObject["coords"];
+          delete tempObject["detailsWSUrl"];
+          delete tempObject["bookingRatesMwUrl"];
 
       }
       console.log(JSON.stringify(result));
