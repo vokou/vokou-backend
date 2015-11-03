@@ -46,6 +46,7 @@ else{
             tempObject.lsp = 9999;
           }else{
             tempObject.lsp = tempObject.price/ratio;
+            tempObject.passportPoint = Number(tempObject.passportPoint.replace(/'/g,''));
             tempObject.pp = {point_plan: "Points", value: tempObject.lsp/tempObject.passportPoint};
             tempObject.points = tempObject.passportPoint;
           }
