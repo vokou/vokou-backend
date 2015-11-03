@@ -18,18 +18,12 @@ else{
       console.log('error: Unable to access network '+ status);
       phantom.exit();
     } else {
-      console.log(page.content);
-      // var results = page.evaluate(function() {
-      //   //9999 is no room
-      // });
-
-
-      var i;
-      for(i=0 ; i < results.length ; i++){
-        console.log(JSON.stringify(results[i]));
-      }
+      console.log(page.plainText);
+      var resultObject = JSON.parse(jsonSource);
+      console.log(resultObject);
+      phantom.exit();
     }
-    phantom.exit();
+    // phantom.exit();
   });
 
   page.onConsoleMessage = function (msg) {
