@@ -49,7 +49,7 @@ else{
             tempObject.pp = {point_plan: "Points", value: tempObject.lsp/tempObject.passportPoint};
             tempObject.points = tempObject.passportPoint;
           }
-          tempObject.detail = {id:tempObject.code, address: tempObject.address}
+          tempObject.detail = {id:tempObject.code, address: tempObject.address, image: tempObject["image"]}
           if(tempObject["currency"]){
             delete tempObject["currency"];
           }
