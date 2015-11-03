@@ -106,12 +106,12 @@ routes = (app)->
       return res.status(500).end("wrong secret!")
 
     cmd = ""
-    if url.indexOf(req.query.checkin) <= -1
-      return res.status(500).end("ci doesnt match!")
-
-
-    if url.indexOf(req.query.checkout) <= -1
-      return res.status(500).end("co doesnt match!")
+    # if url.indexOf(req.query.checkin) <= -1
+    #   return res.status(500).end("ci doesnt match!")
+    #
+    #
+    # if url.indexOf(req.query.checkout) <= -1
+    #   return res.status(500).end("co doesnt match!")
 
     type = ''
     if( url.indexOf('starwoodhotels') > -1)
