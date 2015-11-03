@@ -22,6 +22,7 @@ else{
       var jsonSource = page.plainText;
       var resultObject = JSON.parse(jsonSource);
       ratio = 1
+      console.log resultObject
       page.open("https://native.usablenet.com/ws/hyatt-nat/v3/getCurrency?env=prod&platform=iphone&currency="+resultObject.currency, function (status) {
         if (status !== 'success') {
           console.log('error: Unable to access network '+ status);
