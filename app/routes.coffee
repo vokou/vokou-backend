@@ -168,6 +168,7 @@ routes = (app)->
         else
           res.json(result)
       else if type == 'hyatt'
+        console.log cmd
         res.end(stdout);
 
 module.exports = routes
