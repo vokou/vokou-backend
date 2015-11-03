@@ -18,9 +18,9 @@ else{
       console.log('error: Unable to access network '+ status);
       phantom.exit();
     } else {
-      jsonSource = page.plainText;
-      var resultObject = JSON.parse(jsonSource);
-      console.log(resultObject);
+      console.log(page.plainText);
+      // var resultObject = JSON.parse(jsonSource);
+      // console.log(resultObject);
       phantom.exit();
     }
     phantom.exit();
