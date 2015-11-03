@@ -9,6 +9,9 @@ if(args.length != (1+1) ){
 }
 else{
   var url = args[1];
+  var resultObject = {};
+  var ratio = 1;
+
   var page = require('webpage').create(),
     url = url
 
@@ -20,22 +23,21 @@ else{
     } else {
       console.log(page.plainText);
       var jsonSource = page.plainText;
-      var resultObject = JSON.parse(jsonSource);
-      ratio = 1
-      console.log resultObject
-      page.open("https://native.usablenet.com/ws/hyatt-nat/v3/getCurrency?env=prod&platform=iphone&currency="+resultObject.currency, function (status) {
-        if (status !== 'success') {
-          console.log('error: Unable to access network '+ status);
-          phantom.exit();
-        }
-        else{
-          jsonSource = page.plainText;
-          var tempObject = JSON.parse(jsonSource);
-          ratio = tempObject.ratio
-        }
-      console.log(ratio);
-      phantom.exit();
+      resultObject = JSON.parse(jsonSource);
     }
+
+
+    page.open("https://native.usablenet.com/ws/hyatt-nat/v3/getCurrency?env=prod&platform=iphone&currency="+resultObject.currency, function (status) {
+      if (status !== 'success') {
+        console.log('error: Unable to access network '+ status);
+        phantom.exit();
+      }
+      else{
+        jsonSource = page.plainText;
+        var tempObject = JSON.parse(jsonSource);
+        ratio = tempObject.ratio
+      }
+      console.log(ratio);
     phantom.exit();
 
     // phantom.exit();
