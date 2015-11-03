@@ -168,7 +168,10 @@ routes = (app)->
         else
           res.json(result)
       else if type == 'hyatt'
-        console.log cmd
+        # console.log cmd
+        result = JSON.parse(stdout)
+        for item in result
+          item.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+item.name
         res.end(stdout);
 
 module.exports = routes
