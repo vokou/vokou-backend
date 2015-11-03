@@ -176,6 +176,6 @@ routes = (app)->
           console.log item.url
           if Number(req.query.propID) == item.detail.id
             return res.json(item)
-        res.end(result);
+        res.json(result);
 
 module.exports = routes
