@@ -172,6 +172,7 @@ routes = (app)->
         result = JSON.parse(stdout)
         for item in result
           item.url = "http://www.hotelscombined.com/Hotel/SearchResults?destination=hotel:"+name+"&radius=0mi&checkin="+ci+"&checkout="+co+"&Rooms=1&adults_1=2&fileName="+item.name
+          console.log item.url
         res.end(stdout);
 
 module.exports = routes
