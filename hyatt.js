@@ -21,7 +21,6 @@ else{
       console.log('error: Unable to access network '+ status);
       phantom.exit();
     } else {
-      // console.log(page.plainText);
       var jsonSource = page.plainText;
       resultObject = JSON.parse(jsonSource);
     }
@@ -36,7 +35,6 @@ else{
         var tempObject = JSON.parse(jsonSource);
         ratio = tempObject.ratio
       }
-      // console.log(ratio);
       result = resultObject.results
       for (var i = 0; i < result.length; i++) {
           var tempObject = result[i];
@@ -58,6 +56,7 @@ else{
           delete tempObject["isSoldOut"];
           delete tempObject["price"];
           delete tempObject["colorCode"];
+          delete tempObject["code"];
           delete tempObject["brand"];
           delete tempObject["description"];
           delete tempObject["phone"];

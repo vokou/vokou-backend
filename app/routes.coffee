@@ -127,10 +127,10 @@ routes = (app)->
       return res.status(500).end("wrong hotel company!")
 
     exec cmd, (error, stdout, stderr)->
-      lines = stdout.split '\n'
-      i = 0
-      result = []
       if type == 'spg'
+        lines = stdout.split '\n'
+        i = 0
+        result = []
         for line in lines
           try
             temp = JSON.parse line
@@ -168,6 +168,6 @@ routes = (app)->
         else
           res.json(result)
       else if type == 'hyatt'
-        res.end('aaaa')
+        res.end(stdout);
 
 module.exports = routes
